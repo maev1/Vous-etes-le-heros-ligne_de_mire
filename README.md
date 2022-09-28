@@ -5,4 +5,4 @@
 #### PALETTE DE COULEURS : [coolors.co](https://coolors.co/604e3d-7f6950-ffffff-f7f7f7-f0f0f0)
 
 ## DIAGRAME
-![img](assets/schema.png)
+![img](assets/maite_vennePS1.1_582-324MO.png)
