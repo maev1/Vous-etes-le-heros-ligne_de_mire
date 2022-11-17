@@ -42,11 +42,19 @@ body {
     font-size: 16px;
 }
 
-.image {
+.imgOuVideoContainer {
 
-    width: 80%;    
+    width: 50%;
     margin: 10px;
 
+}
+
+.video {
+    width: 100%;
+}
+
+#image {
+    width: 100%;    
 }
 
 .boutonContainer {
