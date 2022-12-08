@@ -23,15 +23,15 @@ let chaptersObj = {
     ObjChapterAllerSeBattre: {
         subtitle: "allons se battre",
         text: "Vous avez décidé d'aller vous battre au lieu de vous reposer, vous êtes en route vers le terrain.",
-        img: "assets/chapitre_2.png",
-        hasVideo: false,
+        video: "assets/video_1.mp4",
+        hasVideo: true,
         alt: "image de soldats dans un camion",
         options: [
             {
                 text: "continuer",
                 action: 'goToChapter(chaptersObj.ObjChaptereEnfant)'
             }
-        ],
+        ]
     },
 
     ObjChapterRepos: {
@@ -45,18 +45,8 @@ let chaptersObj = {
                 text: "recommencer",
                 action: 'goToChapter(chaptersObj.ObjChapterArrivee)'
             }
-        ],
+        ]
     },
-
-    /// Je sais pas encore a quoi sert le ce chapitre
-    ObjChapterGuerre: {
-        subtitle: "la guerre",
-        alt: "image de soldat avec un fusil",
-        text: "Vous êtes en guerre et vous défendez!",
-        hasVideo: true,
-        video: "assets/video_1.mp4",
-    },
-    /////////////////////////////////////////////////
 
     ObjChaptereEnfant: {
         subtitle: "l'enfant",
@@ -73,7 +63,7 @@ let chaptersObj = {
                 text: "le tuer",
                 action: 'goToChapter(chaptersObj.ObjChapterPresVictoire)'
             }
-        ],
+        ]
     },
 
     ObjChapterIgnorer: {
@@ -87,7 +77,7 @@ let chaptersObj = {
                 text: "recommencer",
                 action: 'goToChapter(chaptersObj.ObjChapterArrivee)'
             }
-        ],
+        ]
 
     },
 
@@ -99,34 +89,19 @@ let chaptersObj = {
         alt: "image d'un soldat camouflé",
         options: [
             {
-                text: "prendre le matériel avant de fuire",
+                text: "prendre le matériel",
                 action: 'goToChapter(chaptersObj.ObjChapterPrendreMateriel)'
             },
             {
-                text: "continer de se battre avant de fuire",
+                text: "continer de se battre",
                 action: 'goToChapter(chaptersObj.ObjChapterBattreAvantFuite)'
             },
             {
                 text: "attendre",
                 action: 'goToChapter(chaptersObj.ObjChapterAttente)'
             }
-        ],
+        ]
     },
-
-    ///je sais pas a quoi sert ce chapitre
-    ObjChapterFuite: {
-        subtitle: "la fuite",
-        text: "Les ennemis s'approchent qu'allez vous faire?",
-        img: "assets/chapitre_8.jpg",
-        hasVideo: false,
-        opions: [
-            {
-                text: "recommencer",
-                action: 'goToChapter(chaptersObj.ObjChapterArrivee)'
-            }
-        ],
-    },
-    ///////////////////////////////////////
 
 
     ObjChapterAttente: {
@@ -139,12 +114,13 @@ let chaptersObj = {
                 text: "recommencer",
                 action: 'goToChapter(chaptersObj.ObjChapterArrivee)'
             }
-        ],
+        ]
     },
 
+    //trouve la cle
     ObjChapterPrendreMateriel: {
         subtitle: "prendre le matériel",
-        text: "Vous prenez le matériel avant de fuire.",
+        text: "Vous prenez le matériel et fuyez.",
         img: "assets/chapitre_10.jpg",
         hasVideo: false,
         options: [
@@ -152,7 +128,7 @@ let chaptersObj = {
                 text: "continuer",
                 action: 'goToChapter(chaptersObj.ObjChapterEmbuscade)'
             }
-        ],
+        ]
     },
 
 
@@ -166,7 +142,7 @@ let chaptersObj = {
                 text: "l'embuscade",
                 action: 'goToChapter(chaptersObj.ObjChapterEmbuscade)'
             }
-        ],
+        ]
     },
 
 
@@ -175,18 +151,17 @@ let chaptersObj = {
         text: "Vous vous retrouvez dans une embuscade en vous dirigeant vers votre campement, vous avez choisi de prendre le matériel, ce qui vous a permis d'avoir les munitions nécessaire.",
         img: "assets/chapitre_12.jpg",
         hasVideo: false,
-        //mettre option si tu réussis ou non
         options: [
             {
                 text: "Avez-vous assez de munitions?",
-                action: 'isKeyFounded("beginningObj")'
+                action: 'isKeyFounded()'
             }
-        ],
+        ]
     },
 
     ObjChapterVictoire: {
         subtitle: "victoire",
-        text: "Vous avez réussi a survivre félicitation!",
+        text: "Vous avez survécu félicitation!",
         img: "assets/chapitre_13.jpg",
         hasVideo: false,
         options: [
@@ -213,25 +188,28 @@ let chaptersObj = {
 };
 
 
-let audio = null;
 
-let goToChapter = function (chapterName, firstTime = false) {
+let goToChapter = function (chapterObj, firstTime = false) {
 
+    let sonActivation = document.getElementById("son");
+    
+    
+    if (!firstTime && sonActivation.checked) {
 
-    if (!firstTime) {
-
-        audio = new Audio("assets/gunshot.mp3");
+        let audio = new Audio("assets/gunshot.mp3");
         audio.volume = 0.5;
         audio.play();
 
     }
 
+    
+
     //loader le texte
     let sousTitreHTML = document.getElementsByClassName("chapter-titre")[0];
-    sousTitreHTML.innerHTML = chapterName.subtitle;
+    sousTitreHTML.innerHTML = chapterObj.subtitle;
 
-    let questionHTML = document.getElementsByClassName("chapter-question")[0];
-    questionHTML.innerHTML = chapterName.text;
+    let questionHTML = document.getElementsByClassName("question")[0];
+    questionHTML.innerHTML = chapterObj.text;
 
 
     let imgVideoContainerHTML = document.getElementsByClassName("imgOuVideoContainer")[0];
@@ -243,11 +221,11 @@ let goToChapter = function (chapterName, firstTime = false) {
     }
 
     // loader l'image ou la video
-    if (chapterName.hasVideo) {
+    if (chapterObj.hasVideo) {
 
         let videoHTML = document.createElement("video");
         videoHTML.className = "video";
-        videoHTML.src = chapterName.video;
+        videoHTML.src = chapterObj.video;
         videoHTML.loop = true;
         videoHTML.autoplay = true;
         videoHTML.muted = true;
@@ -260,17 +238,15 @@ let goToChapter = function (chapterName, firstTime = false) {
 
         let imgHTML = document.createElement("img");
         imgHTML.id = "image";
-        imgHTML.src = chapterName.img;
+        imgHTML.src = chapterObj.img;
 
         imgVideoContainerHTML.appendChild(imgHTML);
 
     }
 
     
-
-
     //Loop dans tableau f. pour créer les boutons
-    const tableauOptions = chapterName.options;
+    const tableauOptions = chapterObj.options;
     let nbBoutons = tableauOptions.length;
 
     let btnContainerHTML = document.getElementsByClassName("btnContainer")[0];
@@ -293,7 +269,13 @@ let goToChapter = function (chapterName, firstTime = false) {
 
     }
 
-    localStorage.setItem("ChapterName", JSON.stringify(chapterName));
+    // Si arrive au chapitre contenant la cle, trouve la cle
+    if (chapterObj == chaptersObj.ObjChapterPrendreMateriel) {
+        keyfounded = true;
+    }
+
+    // Sauvegarde le niveau actuel
+    localStorage.setItem("ChapterName", JSON.stringify(chapterObj));
     localStorage.setItem("KeyFounded", keyfounded);
 
 };
@@ -304,20 +286,16 @@ let goToChapter = function (chapterName, firstTime = false) {
 //sert a savoir si la cle a ete recupere
 let keyfounded = false;
 
-let changeStateKeyFounded = function () {
-    keyfounded = true;
-    goToChapter("ObjChapterEmbuscade");
-
-    //pas dans les instructions
-    //let imgCle = document.querySelector(".ico-key").classList.add("isVisible");
-}
 
 //si la cle est trouve
 let isKeyFounded = function () {
     if (keyfounded) {
-        goToChapter("ObjChapterVictoire");
-    } else {
-        goToChapter("ObjChapterDefaite");
+        goToChapter(chaptersObj.ObjChapterVictoire);
+        keyfounded = false;
+    } 
+    else {
+        goToChapter(chaptersObj.ObjChapterDefaite);
+        keyfounded = false;
     }
 }
 
@@ -335,9 +313,16 @@ else {
     goToChapter(chaptersObj.ObjChapterArrivee, true);
 } 
 
+        
+// Reset game
+function resetGame() {
 
+    keyfounded = false;
+    goToChapter(chaptersObj.ObjChapterArrivee);
 
+}
 
-
+let btnRemoveGame = document.getElementById("btnEfface");
+btnRemoveGame.setAttribute("onclick", "resetGame()");
 
 
