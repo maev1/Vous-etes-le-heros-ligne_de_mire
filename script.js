@@ -8,6 +8,7 @@ let chaptersObj = {
         img: "assets/chapitre_1.png",
         hasVideo: false,
         alt: "image d'avion",
+        class: "arrive",
         options: [
             {
                 text: "aller se battre",
@@ -26,6 +27,7 @@ let chaptersObj = {
         video: "assets/video_1.mp4",
         hasVideo: true,
         alt: "image de soldats dans un camion",
+        class: "AllerSeBattre",
         options: [
             {
                 text: "continuer",
@@ -40,6 +42,7 @@ let chaptersObj = {
         img: "assets/chapitre_3.jpg",
         hasVideo: false,
         alt: "image de colliers militaire",
+        class: "Repos",
         options: [
             {
                 text: "recommencer",
@@ -54,6 +57,7 @@ let chaptersObj = {
         img: "assets/chapitre_5.png",
         hasVideo: false,
         alt: "image d'enfant avec un fusil",
+        class: "Enfant",
         options: [
             {
                 text: "l'ignorer",
@@ -72,6 +76,7 @@ let chaptersObj = {
         img: "assets/chapitre_6.jpg",
         hasVideo: false,
         alt: "image de deux soldats",
+        class: "Ignorer",
         options: [
             {
                 text: "recommencer",
@@ -87,6 +92,7 @@ let chaptersObj = {
         hasVideo: true,
         video: "assets/video_2.mp4",
         alt: "image d'un soldat camouflé",
+        class: "PresVictoire",
         options: [
             {
                 text: "prendre le matériel",
@@ -109,6 +115,7 @@ let chaptersObj = {
         text: "Vous avez attendu trop longtemps avant de fuire et les forces ennemis vous ont rattrapé. vous êtes mort.",
         img: "assets/chapitre_9.jpg",
         hasVideo: false,
+        class: "Attente",
         options: [
             {
                 text: "recommencer",
@@ -123,6 +130,7 @@ let chaptersObj = {
         text: "Vous prenez le matériel et fuyez.",
         img: "assets/chapitre_10.jpg",
         hasVideo: false,
+        class: "PrendreMateriel",
         options: [
             {
                 text: "continuer",
@@ -137,6 +145,7 @@ let chaptersObj = {
         text: "Vous continuer de vous battre avant de prendre la fuite.",
         img: "assets/chapitre_11.jpg",
         hasVideo: false,
+        class: "BattreAvantFuite",
         options: [
             {
                 text: "l'embuscade",
@@ -151,6 +160,7 @@ let chaptersObj = {
         text: "Vous vous retrouvez dans une embuscade en vous dirigeant vers votre campement, vous avez choisi de prendre le matériel, ce qui vous a permis d'avoir les munitions nécessaire.",
         img: "assets/chapitre_12.jpg",
         hasVideo: false,
+        class: "Embuscade",
         options: [
             {
                 text: "Avez-vous assez de munitions?",
@@ -164,6 +174,7 @@ let chaptersObj = {
         text: "Vous avez survécu félicitation!",
         img: "assets/chapitre_13.jpg",
         hasVideo: false,
+        class: "Victoire",
         options: [
             {
                 text: "Avez-vous reussi",
@@ -177,6 +188,7 @@ let chaptersObj = {
         text: "Vous y étiez presque mais malheureusement vous êtes mort dans l'embuscade.",
         img: "assets/chapitre_14.jpg",
         hasVideo: false,
+        class: "Defaite",
         options: [
             {
                 text: "Avez-vous echoue",
@@ -211,7 +223,10 @@ let goToChapter = function (chapterObj, firstTime = false) {
     let questionHTML = document.getElementsByClassName("question")[0];
     questionHTML.innerHTML = chapterObj.text;
 
-
+    //body
+    let bodyHTML = document.querySelector("body");
+    bodyHTML.setAttribute("class", chapterObj.class);
+    
     let imgVideoContainerHTML = document.getElementsByClassName("imgOuVideoContainer")[0];
 
     var child = imgVideoContainerHTML.lastElementChild; 
